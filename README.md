@@ -23,17 +23,17 @@ When doing a shell search you get the following providers:
 - Google Search of a website         e.g ``Reddit Best Linux Repo``
 - Search YouTube for a video         e.g ``Focus Music``
 - Search Maps for directions         e.g ``Directions to high street``
-- Search News for latest news        e.g ``Local``
 - Search Translate for a language    e.g ``Hello friend``
+- Search News for latest news        e.g ``Local``
+- Search Weather for forecast        e.g ``Local``
 - Open Link to open any link         e.g ``Localhost:8000``
 
 > [!CAUTION]
 > The provider will only populate the first 6 options that are enabled.
 
 > [!TIP]
->  Check the extension settings as it is set to first result by default.
->  It will only activate on the 5th character by default.
->  Test by typing 'Local' and see if it activates.
+>  It will only activate on the 5th character by default. Check settings.<br/>
+>  Test by typing 'Local' in Gnome search and see if it activates.
 
 # Credits:
 This extension was created using Zed and Inkling and is open source. <br/>
