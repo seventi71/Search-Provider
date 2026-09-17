@@ -4,7 +4,7 @@ This extension adds a Chrome search provider to Gnome Search.
 
 # Extension Store:
 <a href="https://extensions.gnome.org/extension/10889/search-provider/">
-<img src="https://github.com/seventi71/Search-Provider/blob/main/assets/get-it-on.svg" width="100" </a>
+<img src="https://github.com/seventi71/Search-Provider/blob/main/assets/get-it-on.svg" width="240"> </a>
 
 > [!NOTE]
 > The extension has been submitted to the extensions store, waiting for approval.
