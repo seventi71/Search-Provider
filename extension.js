@@ -299,6 +299,15 @@ export default class ChromeSearchProviderExtension extends Extension {
         my_prefs= this.getSettings();
         this._provider = new ChromeSearchProvider(this);
         Main.overview.searchController.addProvider(this._provider);
+
+
+        // this allows the Chrome Search provider to be loaded first and appear at the top of results.
+        const appSearchSetting = new Gio.Settings({ schema: 'org.gnome.desktop.search-providers' });
+        if (my_prefs.get_boolean('show-app-search')) {
+          appSearchSetting.set_boolean('disable-external', true);
+        // reloads the the Gnome 'App Search' provider to push Chrome before it.
+          appSearchSetting.set_boolean('disable-external', false);
+        }
     }
 
     disable() {

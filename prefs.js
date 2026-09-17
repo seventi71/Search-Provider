@@ -4,42 +4,30 @@ import Adw from 'gi://Adw';
 
 import {ExtensionPreferences} from 'resource:///org/gnome/Shell/Extensions/js/extensions/prefs.js';
 
-/**
- * This extension was created using Zed and Inkling and is open source.
- * Some of the code was reused the extension 'Browser Search Provider'
- * Some of the preferences code was reused from 'Toggle touchpad on or off'
- * This code lives on github at 'https://github.com/seventi71/Search-Provider'
- */
-
 export default class SwitchFocusTypePreferences extends ExtensionPreferences {
     fillPreferencesWindow(window) {
-        // Create a preferences page, with a single group
+
+      // Create a preferences page
         const page = new Adw.PreferencesPage({
-            title: 'General',
+            title: 'Preferences',
             icon_name: 'dialog-information-symbolic',
         });
         window.add(page);
-        window.set_default_size(600, 800);
+
+      // Set intial window size
+        window.set_default_size(600, 720);
 
         const group = new Adw.PreferencesGroup({
-            title: 'Shell Search',
-            description: 'The provider will only populate the first 6 options that are enabled.',
+            title: 'Search Preferences',
+            description: ' Choose the providers you want to see in the search.',
         });
         page.add(group);
 
-        // Create a new preferences row
-        const spinRow = new Adw.SpinRow({
-            title: 'Activation Characters',
-            subtitle: 'Minimum characters before results appear',
-            adjustment: new Gtk.Adjustment({ value: 3, lower: 1, upper: 20, step_increment: 1 }),
-        });
-        group.add(spinRow);
-
+        // Create a Prefferences rows
         const rowGemini = new Adw.SwitchRow({
             title: 'Show Gemini',
             subtitle: 'Show Ask Gemini, e.g. How to make a curry?',
         });
-        // Update this to pass it
         group.add(rowGemini);
 
         const rowSearch = new Adw.SwitchRow({
@@ -84,18 +72,54 @@ export default class SwitchFocusTypePreferences extends ExtensionPreferences {
         });
         group.add(rowLink);
 
-        const infoBox = new Adw.PreferencesGroup({
-            title: 'Usage Notes',
-            description: ' Placement of search provider is at the bottom of ' +
-                       '\n the screen by default. To move it to the top, disable' +
-                       '\n and re-enable search providers in Gnome search settings.',
-
+        const infoBoxPref = new Adw.PreferencesGroup({
+            title: 'Usage notes:',
+            description: ' Enable/Disable the providers you want to see in the search.' +
+                       '\n Only the first 6 providers chosen will be visible. ' +
+                       '\n Check settings to change position and activation.'
         });
-        page.add(infoBox);
+        page.add(infoBoxPref);
+
+      // Create a Settings Page
+        const settingsPage = new Adw.PreferencesPage({
+            title: 'Settings',
+            icon_name: 'emblem-system-symbolic',
+        });
+
+        window.add(settingsPage);
+        const settingsGroup = new Adw.PreferencesGroup({
+            title: 'Settings',
+            description: ' Choose how you want the provider to behave.',
+        });
+        settingsPage.add(settingsGroup);
+
+      // Create a Settings rows
+      const spinRow = new Adw.SpinRow({
+          title: 'Activation Characters',
+          subtitle: 'Minimum characters before results appear.',
+          adjustment: new Gtk.Adjustment({ value: 3, lower: 1, upper: 20, step_increment: 1 }),
+      });
+      settingsGroup.add(spinRow);
+
+      const rowAppSearch = new Adw.SwitchRow({
+          title: 'Top Location',
+          subtitle: 'Make the provider appear at the top of the results.',
+        });
+        settingsGroup.add(rowAppSearch);
+
+        const infoBoxSettings = new Adw.PreferencesGroup({
+            title: 'Usage notes:',
+            description: ' Choose the number of characters required to activate.' +
+                       '\n Places the provider first or last on the results page.' +
+                       '\n Changing the provider order, requires re-login.',
+        });
+        settingsPage.add(infoBoxSettings);
 
         // Pass the settings to the window
         window._settings = this.getSettings();
         window._settings.bind('activation-chars', spinRow, 'value', Gio.SettingsBindFlags.DEFAULT);
+        window._settings.bind('show-app-search', rowAppSearch, 'active',
+            Gio.SettingsBindFlags.DEFAULT);
         window._settings.bind('show-link', rowLink, 'active',
             Gio.SettingsBindFlags.DEFAULT);
         window._settings.bind('show-gemini', rowGemini, 'active',

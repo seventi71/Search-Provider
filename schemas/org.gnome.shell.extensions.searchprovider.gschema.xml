@@ -2,9 +2,14 @@
 <schemalist>
 <schema id="org.gnome.shell.extensions.searchprovider" path="/org/gnome/shell/extensions/searchprovider/">
         <key name="activation-chars" type="i">
-            <default>4</default>
+            <default>5</default>
             <summary>Activation chars</summary>
             <description>Number of characters before activating</description>
+        </key>
+        <key name="show-app-search" type="b">
+            <default>true</default>
+            <summary>Top Location</summary>
+            <description>Changes App Search in GNOME settings</description>
         </key>
         <key name="show-link" type="b">
             <default>true</default>

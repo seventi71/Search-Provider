@@ -5,18 +5,17 @@ This extension adds a Chrome search provider to Gnome Search.
 # Installation:
 - Download the zip file and unzip it.
   [Download](https://github.com/seventi71/Search-Provider/archive/refs/heads/main.zip)
-- Rename top folder, make sure the folder name is:
+- Rename parent folder, make sure the folder name is:
   ``SearchProvider@github.com``
 - Copy the unzipped renamed folder to:
   ``~/.local/share/gnome-shell/extensions``
 - Logout of Gnome and Login, then go to extension and enable.
 
-> [!TIP]
-> Placement of search provider is at the bottom of the screen by default.
-> To move it to the top, disable and re-enable search providers in Gnome search settings.
-
 > [!CAUTION]
-> The provider will only populate the first 6 options that are enabled.
+> Make sure that the parent folder is directly above extensions.js and not nested.
+
+> [!NOTE]
+> The extension has been submitted to the extensions store, waiting for approval.
 
 # Usage:
 When doing a shell search you get the following providers:
@@ -27,6 +26,14 @@ When doing a shell search you get the following providers:
 - Search News for latest news        e.g ``Local``
 - Search Translate for a language    e.g ``Hello friend``
 - Open Link to open any link         e.g ``Localhost:8000``
+
+> [!CAUTION]
+> The provider will only populate the first 6 options that are enabled.
+
+> [!TIP]
+>  Check the extension settings as it is set to first result by default.
+>  It will only activate on the 5th character by default.
+>  Test by typing 'Local' and see if it activates.
 
 # Credits:
 This extension was created using Zed and Inkling and is open source. <br/>
