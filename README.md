@@ -1,5 +1,4 @@
 # Search Provider - Gnome Search
-This extension adds a Chrome search provider to Gnome Search.
 ![Chrome Search Providers](/assets/providers.png)
 
 # Extension Store:
