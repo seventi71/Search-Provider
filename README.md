@@ -3,6 +3,9 @@ This extension adds a Chrome search provider to Gnome Search.
 ![Chrome Search Providers](/assets/providers.png)
 
 # Installation:
+![Get It](/assets/get-it-on.svg)
+  [Gnome Store](https://extensions.gnome.org/extension/10889/search-provider/)
+--- OR ---
 - Download the zip file and unzip it.
   [Download](https://github.com/seventi71/Search-Provider/releases/download/v3/SearchProvider@github.com.zip)
 - Copy the unzipped renamed folder to:
