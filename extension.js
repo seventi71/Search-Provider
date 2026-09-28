@@ -11,7 +11,7 @@ import * as Main from 'resource:///org/gnome/shell/ui/main.js';
  * This code lives on github at 'https://github.com/seventi71/Search-Provider'
  */
 
-let my_prefs;
+let my_settings;
 
 class ChromeSearchProvider {
     constructor(extension) {
@@ -227,21 +227,21 @@ class ChromeSearchProvider {
      */
 
     getInitialResultSet(terms, cancellable) {
-        const minChars = my_prefs.get_int('activation-chars');
+        const minChars = my_settings.get_int('activation-chars');
         if (terms.join(" ").length < minChars) return Promise.resolve([]);
         const identifiers = [];
 
-        let show_link = my_prefs.get_boolean('show-link');
-        let show_gemini = my_prefs.get_boolean('show-gemini');
-        let show_search=my_prefs.get_boolean('show-search');
-        let show_youtube=my_prefs.get_boolean('show-youtube');
-        let show_maps=my_prefs.get_boolean('show-maps');
-        let show_translate=my_prefs.get_boolean('show-translate');
-        let show_news=my_prefs.get_boolean('show-news');
-        let show_weather=my_prefs.get_boolean('show-weather');
-        let show_flights = my_prefs.get_boolean('show-flights');
-        let show_shopping = my_prefs.get_boolean('show-shopping');
-        let show_books = my_prefs.get_boolean('show-books');
+        let show_link = my_settings.get_boolean('show-link');
+        let show_gemini = my_settings.get_boolean('show-gemini');
+        let show_search=my_settings.get_boolean('show-search');
+        let show_youtube=my_settings.get_boolean('show-youtube');
+        let show_maps=my_settings.get_boolean('show-maps');
+        let show_translate=my_settings.get_boolean('show-translate');
+        let show_news=my_settings.get_boolean('show-news');
+        let show_weather=my_settings.get_boolean('show-weather');
+        let show_flights = my_settings.get_boolean('show-flights');
+        let show_shopping = my_settings.get_boolean('show-shopping');
+        let show_books = my_settings.get_boolean('show-books');
 
 
       if (show_gemini) {
@@ -304,7 +304,7 @@ class ChromeSearchProvider {
      * @returns {Promise<string[]>}
      */
     getSubsearchResultSet(results, terms, cancellable) {
-        const minChars = my_prefs.get_int('activation-chars');
+        const minChars = my_settings.get_int('activation-chars');
         if (terms.join(" ").length < minChars) return Promise.resolve([]);
         if (cancellable.is_cancelled())
             throw Error('Search Cancelled');
@@ -334,14 +334,14 @@ class ChromeSearchProvider {
 
 export default class ChromeSearchProviderExtension extends Extension {
     enable() {
-        my_prefs= this.getSettings();
+        my_settings= this.getSettings();
         this._provider = new ChromeSearchProvider(this);
         Main.overview.searchController.addProvider(this._provider);
 
 
         // this allows the Chrome Search provider to be loaded first and appear at the top of results.
         const appSearchSetting = new Gio.Settings({ schema: 'org.gnome.desktop.search-providers' });
-        if (my_prefs.get_boolean('show-app-search')) {
+        if (my_settings.get_boolean('show-app-search')) {
           appSearchSetting.set_boolean('disable-external', true);
         // reloads the the Gnome 'App Search' provider to push Chrome before it.
           appSearchSetting.set_boolean('disable-external', false);
@@ -349,7 +349,7 @@ export default class ChromeSearchProviderExtension extends Extension {
     }
 
     disable() {
-        my_prefs = null;
+        my_settings = null;
         Main.overview.searchController.removeProvider(this._provider);
         this._provider = null;
     }
