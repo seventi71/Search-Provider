@@ -1,6 +1,6 @@
 {
   "name": "Search Provider",
-  "description": "Use shell search to launch Google search capabilities.",
+  "description": "Use shell search to launch Google Chrome search capabilities. Google Chrome install recommended.",
   "original-authors": "Christopher <seventi7@gmail.com>",
   "settings-schema": "org.gnome.shell.extensions.searchprovider",
   "shell-version": [

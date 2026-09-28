@@ -15,7 +15,7 @@ export default class SwitchFocusTypePreferences extends ExtensionPreferences {
         window.add(page);
 
       // Set intial window size
-        window.set_default_size(600, 720);
+        window.set_default_size(600, 740);
 
         const group = new Adw.PreferencesGroup({
             title: 'Search Preferences',
@@ -44,7 +44,7 @@ export default class SwitchFocusTypePreferences extends ExtensionPreferences {
 
         const rowMaps = new Adw.SwitchRow({
             title: 'Show Maps',
-            subtitle: 'Show Search Maps, eg. Directions to "location"',
+            subtitle: 'Show Search Maps, eg. Directions to London',
         });
         group.add(rowMaps);
 
@@ -64,8 +64,27 @@ export default class SwitchFocusTypePreferences extends ExtensionPreferences {
             title: 'Show Weather',
             subtitle: 'Show Weather, e.g. Local or "town"',
         });
-      group.add(rowWeather);
+        group.add(rowWeather);
 
+        const rowFlights = new Adw.SwitchRow({
+            title: 'Show Flights',
+            subtitle: 'Show Google Flights, e.g. London to NYC',
+        });
+        group.add(rowFlights);
+
+        const rowShopping = new Adw.SwitchRow({
+            title: 'Show Shopping',
+            subtitle: 'Show Google Shopping, e.g. Linux laptop',
+        });
+        group.add(rowShopping);
+
+        const rowBooks = new Adw.SwitchRow({
+            title: 'Show Books',
+            subtitle: 'Show Google Books, e.g. linux for beginners',
+        });
+        group.add(rowBooks);
+
+        // Show link always last in list.
         const rowLink = new Adw.SwitchRow({
             title: 'Show Link',
             subtitle: 'Show Open Link, e.g Localhost:8000',
@@ -135,6 +154,12 @@ export default class SwitchFocusTypePreferences extends ExtensionPreferences {
         window._settings.bind('show-youtube', rowYouTube, 'active',
             Gio.SettingsBindFlags.DEFAULT);
         window._settings.bind('show-weather', rowWeather, 'active',
+            Gio.SettingsBindFlags.DEFAULT);
+        window._settings.bind('show-flights', rowFlights, 'active',
+            Gio.SettingsBindFlags.DEFAULT);
+        window._settings.bind('show-shopping', rowShopping, 'active',
+            Gio.SettingsBindFlags.DEFAULT);
+        window._settings.bind('show-books', rowBooks, 'active',
             Gio.SettingsBindFlags.DEFAULT);
     }
 }

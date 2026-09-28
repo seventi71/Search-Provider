@@ -1,13 +1,20 @@
 #!/bin/bash
 
 # Compile schemas
-glib-compile-schemas ~/Agent/projects/SearchProvider@github.com/schemas/
+echo "Compiling schemas ..."
+glib-compile-schemas $(pwd)/schemas/
 
 # Remove existing extension
-rm -rf ~/.local/share/gnome-shell/extensions/SearchProvider@github.com
+if [ -d ~/.local/share/gnome-shell/extensions/SearchProvider@github.com ]; then
+    echo "Removing existing extension ..."
+    rm -rf ~/.local/share/gnome-shell/extensions/SearchProvider@github.com
+else
+    echo "No existing extension found."
+fi
 
 # Copy development version
-cp -r ~/Agent/projects/SearchProvider@github.com ~/.local/share/gnome-shell/extensions/
+echo "Copying development version ..."
+cp -r . ~/.local/share/gnome-shell/extensions/SearchProvider@github.com
 
 # Confirm installation
 echo "Installed SearchProvider@github.com"

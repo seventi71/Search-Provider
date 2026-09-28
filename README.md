@@ -6,26 +6,34 @@
 <img src="https://github.com/seventi71/Search-Provider/blob/main/assets/get-it-on.svg" width="240"> </a>
 
 > [!NOTE]
-> The extension has been submitted to the extensions store, waiting for approval.
+> This extenstion works with Gnome Extensions, which must be installed for this to work.
+> Optionally, if you have Gnome Extension Manager installed, just search for 'Search Provider' and install it from there.
 
-# Latest Version:
+# Development Version:
 [Download - Latest](https://github.com/seventi71/Search-Provider/releases/download/v3/SearchProvider@github.com.zip)
-- Copy the unzipped folder to:
-  ``~/.local/share/gnome-shell/extensions``
+- Unzip and run  ''bash install.sh''
 - Logout of Gnome and Login, then go to extension and enable.
 
 > [!CAUTION]
-> Make sure that the parent folder is directly above extensions.js and not nested after unzip.
+> The compile of Glib schemas may fail if you have an older version of Gnome installed.
+
+> [!TIP]
+>  This extension works best with the Chrome browser:<br/>
+>  - Google Chrome official ( [Debian](https://www.google.com/chrome/);  [Arch](https://aur.archlinux.org/packages/google-chrome);  [Flathub](https://flathub.org/en/apps/com.google.Chrome)  ) <br/>
+>  - Chromium original ( [Debian](https://packages.debian.org/search?keywords=chromium);  [Arch](https://archlinux.org/packages/extra/x86_64/chromium/);  [Flathub](https://flathub.org/en/apps/org.chromium.Chromium)  )
 
 # Usage:
 When doing a shell search you get the following providers:
 - Ask Gemini for an AI answer        e.g ``How to make a curry?``
 - Google Search of a website         e.g ``Reddit Best Linux Repo``
 - Search YouTube for a video         e.g ``Focus Music``
-- Search Maps for directions         e.g ``Directions to high street``
-- Search Translate for a language    e.g ``Hello friend``
-- Search News for latest news        e.g ``Local``
-- Search Weather for forecast        e.g ``Local``
+- Search Maps for directions         e.g ``Directions to London``
+- Search Translate for a language    e.g ``Hello, there stranger``
+- Search News for latest news        e.g ``Local`` or ``"topic"``
+- Search Weather for forecast        e.g ``Local`` or ``"town"``
+- Search Flights for travel          e.g ``London to NYC``
+- Search Shopping for products        e.g ``Linux laptop``
+- Search Books for reading            e.g ``linux for beginners``
 - Open Link to open any link         e.g ``Localhost:8000``
 
 > [!CAUTION]

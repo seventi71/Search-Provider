@@ -82,6 +82,30 @@ class ChromeSearchProvider {
                   return `https://maps.google.com/?q=${terms.join(" ")}`;
                 }
             },
+            'flights': {
+                name: 'Search Flights',
+                description: 'Search Google Flights',
+                icon: 'flights',
+                getQuery: function (terms) {
+                  return `https://www.google.com/travel/flights/search?q=${terms.join(" ")}`;
+                }
+            },
+            'shopping': {
+                name: 'Search Shopping',
+                description: 'Search Google Shopping',
+                icon: 'shopping',
+                getQuery: function (terms) {
+                  return `https://www.google.com/search?q=${terms.join(" ")}&udm=28`;
+                }
+            },
+            'books': {
+                name: 'Search Books',
+                description: 'Search Google Books',
+                icon: 'books',
+                getQuery: function (terms) {
+                  return `https://www.google.com/search?udm=36&q=${terms.join(" ")}`;
+                }
+            },
         };
     }
 
@@ -207,14 +231,18 @@ class ChromeSearchProvider {
         if (terms.join(" ").length < minChars) return Promise.resolve([]);
         const identifiers = [];
 
-        let show_gemini=my_prefs.get_boolean('show-gemini');
+        let show_link = my_prefs.get_boolean('show-link');
+        let show_gemini = my_prefs.get_boolean('show-gemini');
         let show_search=my_prefs.get_boolean('show-search');
         let show_youtube=my_prefs.get_boolean('show-youtube');
         let show_maps=my_prefs.get_boolean('show-maps');
         let show_translate=my_prefs.get_boolean('show-translate');
         let show_news=my_prefs.get_boolean('show-news');
         let show_weather=my_prefs.get_boolean('show-weather');
-        let show_link = my_prefs.get_boolean('show-link');
+        let show_flights = my_prefs.get_boolean('show-flights');
+        let show_shopping = my_prefs.get_boolean('show-shopping');
+        let show_books = my_prefs.get_boolean('show-books');
+
 
       if (show_gemini) {
       identifiers.push('gemini');
@@ -237,6 +265,16 @@ class ChromeSearchProvider {
       if (show_weather) {
       identifiers.push('weather');
       }
+      if (show_flights) {
+      identifiers.push('flights');
+      }
+      if (show_shopping) {
+      identifiers.push('shopping');
+      }
+      if (show_books) {
+      identifiers.push('books');
+      }
+      // Show link always last in list.
       if (show_link) {
       identifiers.push('link');
       }

@@ -59,5 +59,23 @@
             <description>Show Weather
             </description>
         </key>
+        <key name="show-flights" type="b">
+            <default>true</default>
+            <summary>Flights</summary>
+            <description>Show Flights
+            </description>
+        </key>
+        <key name="show-shopping" type="b">
+            <default>true</default>
+            <summary>Shopping</summary>
+            <description>Show Shopping
+            </description>
+        </key>
+        <key name="show-books" type="b">
+            <default>true</default>
+            <summary>Books</summary>
+            <description>Show Books
+            </description>
+        </key>
 </schema>
 </schemalist>
