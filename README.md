@@ -7,7 +7,7 @@
 
 > [!TIP]
 > Optionally, you can install from Gnome Extension Manager, search for ``Search Provider`` </br> 
-> This extension works best with the Google Chrome or Chromium.
+> This extension works best with Google Chrome Browser.
 
 # Development Version:
 [Download - Latest](https://github.com/seventi71/Search-Provider/releases/download/v3/SearchProvider@github.com.zip)
