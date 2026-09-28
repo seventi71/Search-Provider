@@ -6,9 +6,8 @@
 <img src="https://github.com/seventi71/Search-Provider/blob/main/assets/get-it-on.svg" width="240"> </a>
 
 > [!NOTE]
->  This extension only works with [Gnome Extensions](https://extensions.gnome.org) </br> 
->  Optionally, use Gnome Extension Manager and search for ``Search Provider`` </br> 
->  This extension works best with the Chrome - ([Debian](https://www.google.com/chrome/) [Arch](https://aur.archlinux.org/packages/google-chrome) [Flathub](https://flathub.org/en/apps/com.google.Chrome)
+> Install from Gnome Extension Manager search for ``Search Provider`` </br> 
+> This extension works best with the Chrome - ([Debian](https://www.google.com/chrome/) [Arch](https://aur.archlinux.org/packages/google-chrome) [Flathub](https://flathub.org/en/apps/com.google.Chrome)
 
 # Development Version:
 [Download - Latest](https://github.com/seventi71/Search-Provider/releases/download/v3/SearchProvider@github.com.zip)
