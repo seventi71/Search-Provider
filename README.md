@@ -5,8 +5,8 @@
 <a href="https://extensions.gnome.org/extension/10889/search-provider/">
 <img src="https://github.com/seventi71/Search-Provider/blob/main/assets/get-it-on.svg" width="240"> </a>
 
-> [!NOTE]
-> Install from Gnome Extension Manager search for ``Search Provider`` </br> 
+> [!TIP]
+> Optionally, you can install from Gnome Extension Manager, search for ``Search Provider`` </br> 
 > This extension works best with the Chrome - ([Debian](https://www.google.com/chrome/) [Arch](https://aur.archlinux.org/packages/google-chrome) [Flathub](https://flathub.org/en/apps/com.google.Chrome)
 
 # Development Version:
