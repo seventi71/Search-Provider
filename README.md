@@ -10,7 +10,7 @@
 > This extension works best with Google Chrome Browser.
 
 # Development Version:
-[Download - Latest V4](https://github.com/seventi71/Search-Provider/releases/download/V4/SearchProvider@github.com.zip))
+[Download - Latest V4](https://github.com/seventi71/Search-Provider/releases/download/V4/SearchProvider@github.com.zip)
 - Unzip and run  ``bash install.sh``
 - Logout of Gnome and Login, then go to extension and enable.
 
