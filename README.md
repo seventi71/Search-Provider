@@ -8,8 +8,7 @@
 > [!NOTE]
 >  This extension only works with [Gnome Extensions](https://extensions.gnome.org) </br> 
 >  Optionally, use Gnome Extension Manager and search for ``Search Provider`` </br> 
->  This extension works best with the Chrome browser:<br/>
->  - Google Chrome official ( [Debian](https://www.google.com/chrome/);  [Arch](https://aur.archlinux.org/packages/google-chrome);  [Flathub](https://flathub.org/en/apps/com.google.Chrome)  )
+>  This extension works best with the Chrome - ([Debian](https://www.google.com/chrome/) [Arch](https://aur.archlinux.org/packages/google-chrome) [Flathub](https://flathub.org/en/apps/com.google.Chrome)
 
 # Development Version:
 [Download - Latest](https://github.com/seventi71/Search-Provider/releases/download/v3/SearchProvider@github.com.zip)
