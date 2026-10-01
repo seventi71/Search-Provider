@@ -23,8 +23,7 @@ echo "Creating zip package ..."
 rm -rf "$BUILD_DIR/build"
 zip -r "$BUILD_DIR/$EXT_NAME.zip" . -x '*.git*' '*.sh' 'build/*'
 
-mkdir -p package
-mv "$BUILD_DIR/$EXT_NAME.zip" package/
+mv "$BUILD_DIR/$EXT_NAME.zip" ../
 
 echo "Compiling schemas ..."
 glib-compile-schemas "$BUILD_DIR/schemas/"
