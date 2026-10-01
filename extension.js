@@ -12,6 +12,14 @@ import * as Main from 'resource:///org/gnome/shell/ui/main.js';
  */
 
 let my_settings;
+let ShortcutActive = false;
+
+function cleanTerms(terms) {
+  let q = terms.join(" ");
+  // Strip leading slash and optional letter from shortcuts (e.g. /g for gemini)
+  if (q.startsWith('/')) q = q.replace(/^\/?[a-z]? ?/, '');
+  return q;
+}
 
 class ChromeSearchProvider {
     constructor(extension) {
@@ -19,91 +27,101 @@ class ChromeSearchProvider {
         this.providers = {
             'link': {
                 name: 'Open Link',
-                description: 'Open link',
+                description: 'Open a hyperlink. (/l)',
                 icon: 'chrome',
                 getQuery: function (terms) {
-                  let q = terms.join(" ");
+                  let q = cleanTerms(terms);
                   return /^https?:\/\//.test(q) ? q : `http://${q}`;
                 }
             },
             'gemini': {
                 name: 'Ask Gemini',
-                description: 'Ask Gemini a question online',
+                description: 'Ask Gemini a question online. (/g)',
                 icon: 'gemini',
                 getQuery: function (terms) {
-                  return `https://www.google.com/search?udm=50&aep=12&q=${terms.join(" ")}`;
+                  let q = cleanTerms(terms);
+                  return `https://www.google.com/search?udm=50&aep=12&q=${q}`;
                 }
             },
             'search': {
                 name: 'Search Google',
-                description: 'Search online with Google',
+                description: 'Search online with Google. (/s)',
                 icon: 'search',
                 getQuery: function (terms) {
-                  return `https://www.google.com/search?q=${terms.join(" ")}`;
+                  let q = cleanTerms(terms);
+                  return `https://www.google.com/search?q=${q}`;
                 }
             },
             'news': {
                 name: 'Search News',
-                description: 'Search Google News',
+                description: 'Search Google News. (/n)',
                 icon: 'news',
                 getQuery: function (terms) {
-                  return `https://news.google.com/search?q=${terms.join(" ")}`;
+                  let q = cleanTerms(terms);
+                  return `https://news.google.com/search?q=${q}`;
                 }
             },
             'youtube': {
                 name: 'Search YouTube',
-                description: 'Search YouTube Videos',
+                description: 'Search YouTube Videos. (/y)',
                 icon: 'youtube',
                 getQuery: function (terms) {
-                  return `https://www.youtube.com/results?search_query=${terms.join(" ")}`;
+                  let q = cleanTerms(terms);
+                  return `https://www.youtube.com/results?search_query=${q}`;
                 }
             },
             'translate': {
-                name: 'Search Translate',
-                description: 'Translate with Google',
+                name: 'Translate',
+                description: 'Translate with Google. (/t)',
                 icon: 'translate',
                 getQuery: function (terms) {
-                  return `https://translate.google.com/?text=${terms.join(" ")}`;
+                  let q = cleanTerms(terms);
+                  return `https://translate.google.com/?text=${q}`;
                 }
             },
             'weather': {
                 name: 'Search Weather',
-                description: 'Search weather with Google',
+                description: 'Search weather with Google. (/w)',
                 icon: 'weather',
                 getQuery: function (terms) {
-                  return `https://www.google.com/search?q=${terms.join(" ")}+weather`;
+                  let q = cleanTerms(terms);
+                  return `https://www.google.com/search?q=${q}+weather`;
                 }
             },
             'maps': {
                 name: 'Search Maps',
-                description: 'Search online with Maps',
+                description: 'Search online with Maps. (/m)',
                 icon: 'maps',
                 getQuery: function (terms) {
-                  return `https://maps.google.com/?q=${terms.join(" ")}`;
+                  let q = cleanTerms(terms);
+                  return `https://maps.google.com/?q=${q}`;
                 }
             },
             'flights': {
                 name: 'Search Flights',
-                description: 'Search Google Flights',
+                description: 'Search Google Flights. (/f)',
                 icon: 'flights',
                 getQuery: function (terms) {
-                  return `https://www.google.com/travel/flights/search?q=${terms.join(" ")}`;
+                  let q = cleanTerms(terms);
+                  return `https://www.google.com/travel/flights/search?q=${q}`;
                 }
             },
             'shopping': {
                 name: 'Search Shopping',
-                description: 'Search Google Shopping',
+                description: 'Search Google Shopping. (/h)',
                 icon: 'shopping',
                 getQuery: function (terms) {
-                  return `https://www.google.com/search?q=${terms.join(" ")}&udm=28`;
+                  let q = cleanTerms(terms);
+                  return `https://www.google.com/search?q=${q}&udm=28`;
                 }
             },
             'books': {
                 name: 'Search Books',
-                description: 'Search Google Books',
+                description: 'Search Google Books. (/b)',
                 icon: 'books',
                 getQuery: function (terms) {
-                  return `https://www.google.com/search?udm=36&q=${terms.join(" ")}`;
+                  let q = cleanTerms(terms);
+                  return `https://www.google.com/search?udm=36&q=${q}`;
                 }
             },
         };
@@ -151,7 +169,6 @@ class ChromeSearchProvider {
      */
       activateResult(result, terms) {
         const query = this.providers[result].getQuery(terms);
-
         Gio.AppInfo.launch_default_for_uri(query, null);
     }
 
@@ -165,8 +182,6 @@ class ChromeSearchProvider {
      * @returns {Clutter.Actor|null} An actor for the result
      */
       createResultObject(meta) {
-        console.debug(`createResultObject(${meta.id})`);
-
         return null;
     }
 
@@ -181,29 +196,36 @@ class ChromeSearchProvider {
      * @returns {Promise<ResultMeta[]>} A list of result metadata objects
      */
       getResultMetas(results, cancellable) {
-        const { scaleFactor } = St.ThemeContext.get_for_stage(global.stage);
 
         return new Promise((resolve, reject) => {
-            const cancelledId = cancellable.connect(
-                () => reject(Error('Operation Cancelled')));
+          const cancelledId = cancellable.connect(
+            () => reject(Error('Operation Cancelled')));
 
-            const resultMetas = [];
+          const resultMetas = [];
+          // default icon size
+          let iconSize = 96;
 
-            for (const identifier of results) {
-                const provider = this.providers[identifier];
-                const meta = {
-                    id: identifier,
-                    name: provider.name,
-                    description: provider.description,
-                    // clipboardText: 'Content for the clipboard',
-                    createIcon: size => {
-                        return new St.Icon({
-                            gicon: Gio.icon_new_for_string(this._extension.path + '/assets/' + provider.icon + '.png'),
-                            width: size * scaleFactor,
-                            height: size * scaleFactor,
-                        });
-                    },
-                };
+          for (const identifier of results) {
+            const provider = this.providers[identifier];
+            let providerName = provider.name;
+            if (ShortcutActive) {
+              // small icon size means use short key.
+              iconSize = 24;
+              providerName = provider.description.match(/\(\/[^)]+\)/)[0].slice(1, -1);
+            }
+            const meta = {
+              id: identifier,
+              name: providerName,
+              description: provider.description,
+              // clipboardText: 'Content for the clipboard',
+              createIcon: size => {
+                return new St.Icon({
+                  gicon: Gio.icon_new_for_string(this._extension.path + '/assets/' + provider.icon + '.png'),
+                  width: iconSize,
+                  height: iconSize,
+                });
+              },
+            };
 
                 resultMetas.push(meta);
             }
@@ -227,66 +249,115 @@ class ChromeSearchProvider {
      */
 
     getInitialResultSet(terms, cancellable) {
-        const minChars = my_settings.get_int('activation-chars');
-        if (terms.join(" ").length < minChars) return Promise.resolve([]);
+        ShortcutActive = false;
+        const raw = terms.join(" ");
         const identifiers = [];
 
-        let show_link = my_settings.get_boolean('show-link');
-        let show_gemini = my_settings.get_boolean('show-gemini');
-        let show_search=my_settings.get_boolean('show-search');
-        let show_youtube=my_settings.get_boolean('show-youtube');
-        let show_maps=my_settings.get_boolean('show-maps');
-        let show_translate=my_settings.get_boolean('show-translate');
-        let show_news=my_settings.get_boolean('show-news');
-        let show_weather=my_settings.get_boolean('show-weather');
-        let show_flights = my_settings.get_boolean('show-flights');
-        let show_shopping = my_settings.get_boolean('show-shopping');
-        let show_books = my_settings.get_boolean('show-books');
+        // Show hardcoded results when magic keys selected (only if followed by space).
+        if (raw.startsWith('/') && (my_settings.get_boolean('show-shortcuts'))) {
+            ShortcutActive = true;
+            const secondChar = raw.charAt(1);
+            switch (secondChar) {
+                case 's':
+                    identifiers.push('search');
+                    return Promise.resolve(identifiers);
+                case 'y':
+                    identifiers.push('youtube');
+                    return Promise.resolve(identifiers);
+                case 'w':
+                    identifiers.push('weather');
+                    return Promise.resolve(identifiers);
+                case 'g':
+                    identifiers.push('gemini');
+                    return Promise.resolve(identifiers);
+                case 'n':
+                    identifiers.push('news');
+                    return Promise.resolve(identifiers);
+                case 't':
+                    identifiers.push('translate');
+                    return Promise.resolve(identifiers);
+                case 'm':
+                    identifiers.push('maps');
+                    return Promise.resolve(identifiers);
+                case 'f':
+                    identifiers.push('flights');
+                    return Promise.resolve(identifiers);
+                case 'h':
+                    identifiers.push('shopping');
+                    return Promise.resolve(identifiers);
+                case 'b':
+                    identifiers.push('books');
+                    return Promise.resolve(identifiers);
+                case 'l':
+                    identifiers.push('link');
+                    return Promise.resolve(identifiers);
+                default:
+                // Default is to show all provider for "/"
+                  identifiers.push('gemini');
+                  identifiers.push('search');
+                  identifiers.push('translate');
+                  identifiers.push('youtube');
+                  identifiers.push('maps');
+                  identifiers.push('news');
+                  identifiers.push('weather');
+                  identifiers.push('flights');
+                  identifiers.push('shopping');
+                  identifiers.push('books');
+                  identifiers.push('link');
+                return Promise.resolve(identifiers);
+            }
+        }
 
+        // Check if we should only show results for shortcuts keys, then exit
+        if (my_settings.get_boolean('only-shortcuts')) return Promise.resolve([]);
+        // Check if the text input is below activation threshold, then ex
+        if (raw.length < my_settings.get_int('activation-chars')) return Promise.resolve([]);
 
-      if (show_gemini) {
-      identifiers.push('gemini');
-      }
-       if (show_search) {
-      identifiers.push('search');
-      }
-      if (show_translate) {
-      identifiers.push('translate');
-      }
-      if (show_youtube) {
-      identifiers.push('youtube');
-      }
-      if (show_maps) {
-      identifiers.push('maps');
-      }
-      if (show_news) {
-      identifiers.push('news');
-      }
-      if (show_weather) {
-      identifiers.push('weather');
-      }
-      if (show_flights) {
-      identifiers.push('flights');
-      }
-      if (show_shopping) {
-      identifiers.push('shopping');
-      }
-      if (show_books) {
-      identifiers.push('books');
-      }
-      // Show link always last in list.
-      if (show_link) {
-      identifiers.push('link');
-      }
+        // Raw input is valid, add search results if enabled.
+        if (my_settings.get_boolean('show-gemini')) {
+          identifiers.push('gemini');
+        }
+        if (my_settings.get_boolean('show-search')) {
+          identifiers.push('search');
+        }
+        if (my_settings.get_boolean('show-translate')) {
+          identifiers.push('translate');
+        }
+        if (my_settings.get_boolean('show-youtube')) {
+          identifiers.push('youtube');
+        }
+        if (my_settings.get_boolean('show-maps')) {
+          identifiers.push('maps');
+        }
+        if (my_settings.get_boolean('show-news')) {
+          identifiers.push('news');
+        }
+        if (my_settings.get_boolean('show-weather')) {
+          identifiers.push('weather');
+        }
+        if (my_settings.get_boolean('show-flights')) {
+          identifiers.push('flights');
+        }
+        if (my_settings.get_boolean('show-shopping')) {
+          identifiers.push('shopping');
+        }
+        if (my_settings.get_boolean('show-books')) {
+          identifiers.push('books');
+        }
+        // Show link always last in list.
+        if (my_settings.get_boolean('show-link')) {
+          identifiers.push('link');
+        }
 
-      return new Promise((resolve, reject) => {
-        const cancelledId = cancellable.connect(
-          () => reject(Error('Search Cancelled')));
+        return new Promise((resolve, reject) => {
+          const cancelledId = cancellable.connect(
+            () => reject(Error('Search Cancelled')));
 
-        cancellable.disconnect(cancelledId);
-        if (!cancellable.is_cancelled())
-          resolve(identifiers);
-      });
+          cancellable.disconnect(cancelledId);
+          if (!cancellable.is_cancelled()) {
+            resolve(identifiers);
+          }
+        });
     }
 
     /**
@@ -304,8 +375,6 @@ class ChromeSearchProvider {
      * @returns {Promise<string[]>}
      */
     getSubsearchResultSet(results, terms, cancellable) {
-        const minChars = my_settings.get_int('activation-chars');
-        if (terms.join(" ").length < minChars) return Promise.resolve([]);
         if (cancellable.is_cancelled())
             throw Error('Search Cancelled');
 
@@ -323,8 +392,6 @@ class ChromeSearchProvider {
      * @returns {string[]} The filtered results
      */
     filterResults(results, maxResults) {
-        console.debug(`filterResults([${results}], ${maxResults})`);
-
         if (results.length <= maxResults)
             return results;
 

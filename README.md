@@ -10,9 +10,9 @@
 > This extension works best with Google Chrome Browser.
 
 # Development Version:
-[Download - Latest V4](https://github.com/seventi71/Search-Provider/releases/download/V4/SearchProvider@github.com.zip)
-- Unzip and run  ``bash install.sh``
-- Logout of Gnome and Login, then go to extension and enable.
+- Goto to Code -> Download Zip or Git Clone to your local machine.
+- Unzip and or run  ``bash install.sh``
+- Logout of Gnome and Login, then go to extension and enable it.
 
 > [!CAUTION]
 > The compile of Glib schemas may fail if you have an older version of Gnome installed.
@@ -31,12 +31,16 @@ When doing a shell search you get the following providers:
 - Search Books for reading           e.g ``linux for beginners``
 - Open Link to open any link         e.g ``Localhost:8000``
 
-> [!CAUTION]
-> The provider will only populate the first 6 options that are enabled.
-
 > [!TIP]
->  It will only activate on the 5th character by default. Check settings.<br/>
->  Test by typing 'Local' in Gnome search and see if it activates.
+>  It will only activate on the 7th character by default. Check settings.<br/>
+
+# Shortcuts:
+- Shortcuts activate with "/" character and provider letter (e.g. `/g` for Gemini).
+- When shortcuts are enabled, settings ignore provider toggles and activate on shortcut.
+- Show "Shortcuts Only" disables activation on charaters and streamlines approach for advanced usage.
+- 
+> [!TIP]
+>  Just using "/" will show all providers and then you can select one or change it on the fly. <br/>
 
 # Credits:
 This extension was created using Zed and Inkling and is open source. <br/>

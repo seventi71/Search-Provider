@@ -2,17 +2,28 @@
 <schemalist>
 <schema id="org.gnome.shell.extensions.searchprovider" path="/org/gnome/shell/extensions/searchprovider/">
         <key name="activation-chars" type="i">
-            <default>5</default>
+            <default>7</default>
             <summary>Activation chars</summary>
-            <description>Number of characters before activating</description>
+            <description>Characters Activation</description>
         </key>
+        <key name="show-shortcuts" type="b">
+            <default>true</default>
+            <summary>Shortcuts</summary>
+            <description>Activate shortcuts.</description>
+        </key>
+        <key name="only-shortcuts" type="b">
+            <default>false</default>
+            <summary>Only Shortcuts</summary>
+            <description>only shows shortcuts</description>
+        </key>
+
         <key name="show-app-search" type="b">
             <default>true</default>
             <summary>Top Location</summary>
-            <description>Changes App Search in GNOME settings</description>
+            <description>Locations settings</description>
         </key>
         <key name="show-link" type="b">
-            <default>true</default>
+            <default>false</default>
             <summary>Link</summary>
             <description>Show Link
             </description>
@@ -42,7 +53,7 @@
             </description>
         </key>
         <key name="show-translate" type="b">
-            <default>true</default>
+            <default>false</default>
             <summary>Translate</summary>
             <description>Show Translate
             </description>
@@ -60,19 +71,19 @@
             </description>
         </key>
         <key name="show-flights" type="b">
-            <default>true</default>
+            <default>false</default>
             <summary>Flights</summary>
             <description>Show Flights
             </description>
         </key>
         <key name="show-shopping" type="b">
-            <default>true</default>
+            <default>false</default>
             <summary>Shopping</summary>
             <description>Show Shopping
             </description>
         </key>
         <key name="show-books" type="b">
-            <default>true</default>
+            <default>false</default>
             <summary>Books</summary>
             <description>Show Books
             </description>
